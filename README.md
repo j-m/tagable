@@ -9,8 +9,10 @@ new tagable() {
     ...
   }
   
+  _sort = rank | count | alphabetical 
+  
   _tags = {
-    "cute": {tags: ["S81A_9S", "EF4_aD2", ...], colour: "red", ...}, /*See https://shields.io/endpoint for the parameters*/
+    "cute": {tags: ["S81A_9S", "EF4_aD2", ...], shield: shielder(see https://www.npmjs.com/package/shields), rank?: 1 /*needed for sort*/}, 
     "fluffy": {tags: ["S81A_9S", ...], ...},
     "good": {["EF4_aD2", ...], ...},
     ...
@@ -43,7 +45,9 @@ new tagable() {
   delete tag
   remove resource
   validate references
-  more complex resources
+  resources more complex than a URL
+  change sort type
+  set tag rank
   more options
 }
 
