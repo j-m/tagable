@@ -10,7 +10,7 @@ new tagable() {
   }
   
   _tags = {
-    "cute": {tags: ["S81A_9S", "EF4_aD2", ...], colour: "red", ...},
+    "cute": {tags: ["S81A_9S", "EF4_aD2", ...], colour: "red", ...}, /*See https://shields.io/endpoint for the parameters*/
     "fluffy": {tags: ["S81A_9S", ...], ...},
     "good": {["EF4_aD2", ...], ...},
     ...
