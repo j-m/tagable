@@ -49,6 +49,7 @@ new tagable() {
 
 private generateID() {
   //probably some import idk, just need to make some way to reference, but may use a real language like C instead
+  //if JS is really pass-by-value for primitives and pass-by-reference for objects, then this may not be needed
 }
 
 import(tagablejson) {
