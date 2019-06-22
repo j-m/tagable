@@ -15,7 +15,7 @@ new tagable() {
   _tags = {
     "cute": {tags: ["S81A_9S", "EF4_aD2", ...], shield: shielder(see https://www.npmjs.com/package/shields), ...}, 
     "fluffy": {tags: ["S81A_9S", ...], ...},
-    "good": {["EF4_aD2", ...], ...},
+    "good": {["EF4_aD2", ...], description: "the goodest of the bois. none of these mythical 'bad' ones.", ...},
     ...
   }
   
