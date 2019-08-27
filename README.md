@@ -1,6 +1,6 @@
 # tagable
-Thingy for adding tags to images/resources/whatever
-Will make a tagable-web first and put it on my website, then generalise it and make it an npm package.
+Thingy for adding tags to images/resources/whatever  
+Will make a tagable-web first and put it on my website, then generalise it and make it an npm package.  
 
 ```
 new tagable() {
@@ -72,3 +72,6 @@ export(tagablejson){
 
 
 ```
+
+Tagables should support different optional and required fields for a tag, e.g. description.
+Tag relations. Opposite of. Similar to. Subclass of.
