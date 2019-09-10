@@ -13,9 +13,9 @@ The idea is to provide a simple platform that can be used to tag abstracted reso
 > The implementation is subject to major changes until a v1 release, from which point versioning will be [semver](https://semver.org)
 
 This project is built with Typescript.  
-To get started, run `npm install` to install dependencies.  
-Make sure that your environment is not set to `production` or you will not install the dev dependencies.
-Feel free to open Issues/PRs with suggestions/problems/improvements.
+To get started, run `npm install` to install dependencies.
+
+Feel free to open issues or pull requests with any suggestions, problems, or improvements you may have.
 
 ### Maintainers
 
@@ -23,9 +23,12 @@ Feel free to open Issues/PRs with suggestions/problems/improvements.
 
 ## See also
 
-[oaty](https://github.com/jmsv/oaty)
+- [oaty](https://github.com/jmsv/oaty): Transposes the tagable's data to boost performance
+- [spotable](https://github.com/j-m/spotable): Tagable for Spotify. Create playlists on the fly by filtering tags that you define
+- [PicTag](https://github/com/j-m/PicTag): Forget traditional albums, this is an implementation of tagable that lets you tag images so that one picture can belong to many albums.
+- [What-to-look-for](https://github.com/j-m/What-to-look-for): a better way to remind yourself of past blunders, and organise yourself better, using tagable's tag ancestory structure
 
-### Changelog
+## Changelog
 
 #### `0.1.0`
 
