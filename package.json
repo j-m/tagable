@@ -2,8 +2,8 @@
   "name": "tagable",
   "version": "0.1.0",
   "description": "System to tag abstracted objects",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/src/Tagable.js",
+  "types": "dist/src/Tagable.d.ts",
   "scripts": {
     "benchmark": "ts-node benchmark/index.spec.ts --outDir ./benchmark",
     "build": "tsc",
@@ -16,7 +16,8 @@
   },
   "keywords": [
     "tag",
-    "tags"
+    "label",
+    "group"
   ],
   "author": "Jonathan Marsh <hello@jonmarsh.dev> (https://www.jonmarsh.dev/)",
   "license": "UNLICENSED",
@@ -37,7 +38,6 @@
   },
   "dependencies": {
     "oaty": "^0.3.0",
-    "randomstring": "^1.1.5",
-    "shields": "^2.1.0"
+    "randomstring": "^1.1.5"
   }
 }
