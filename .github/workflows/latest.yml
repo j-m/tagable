@@ -1,6 +1,9 @@
-name: Node CI
+name: latest
 
-on: [push]
+on:
+  push:
+    branches:
+      - 'TAG-*'
 
 jobs:
   build:

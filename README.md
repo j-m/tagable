@@ -1,8 +1,13 @@
 <p align="center">
-  <img width=320 src="./img/logo.png" alt="tagable"/>
+  <img src="./img/logo.png" alt="tagable"/>
+  <br/>
+  <a href="https://github.com/j-m/tagable/actions">
+    <img src="https://github.com/j-m/tagable/workflows/master/badge.svg" alt="master"/>
+  </a>
+  <a href="https://github.com/j-m/tagable/actions">
+    <img src="https://github.com/j-m/tagable/workflows/latest/badge.svg" alt="latest"/>
+  </a>
 </p>
-
-[![Actions Status](https://github.com/j-m/tagable/workflows/Node%20CI/badge.svg)](https://github.com/j-m/tagable/actions)
 
 ## About
 
