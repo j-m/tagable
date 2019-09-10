@@ -1,0 +1,43 @@
+{
+  "name": "tagable",
+  "version": "0.1.0",
+  "description": "System to tag abstracted objects",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "benchmark": "ts-node benchmark/index.spec.ts --outDir ./benchmark",
+    "build": "tsc",
+    "test": "mocha --require ts-node/register test/**/*.spec.ts --reporter list",
+    "format": "tslint --project . --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/j-m/tagable.git"
+  },
+  "keywords": [
+    "tag",
+    "tags"
+  ],
+  "author": "Jonathan Marsh <hello@jonmarsh.dev> (https://www.jonmarsh.dev/)",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/j-m/tagable/issues"
+  },
+  "homepage": "https://github.com/j-m/tagable#readme",
+  "devDependencies": {
+    "@types/chai": "^4.2.0",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^12.7.2",
+    "@types/randomstring": "^1.1.6",
+    "chai": "^4.2.0",
+    "mocha": "^6.2.0",
+    "ts-node": "^8.3.0",
+    "tslint": "^5.19.0",
+    "typescript": "^3.5.3"
+  },
+  "dependencies": {
+    "oaty": "^0.3.0",
+    "randomstring": "^1.1.5",
+    "shields": "^2.1.0"
+  }
+}

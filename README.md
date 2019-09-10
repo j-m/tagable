@@ -1,74 +1,32 @@
-# tagable
-Thingy for adding tags to images/resources/whatever
-Will make a tagable-web first and put it on my website, then generalise it and make it an npm package.
+<p align="center">
+  <img width=320 src="./img/logo.png" alt="tagable"/>
+</p>
 
-```
-new tagable() {
-  _objects = {
-    "c:/pics/cat.png": {id: "S81A_9S", tags: ["cute", "fluffy"] //displays in same order},
-    "c:/pics/dog.png": {id: "EF4_aD2", tags: ["cute", "good"]},
-    ...
-  }
-  
-  _sort = rank | count | alphabetical 
-  
-  _tags = {
-    "cute": {tags: ["S81A_9S", "EF4_aD2", ...], shield: shielder(see https://www.npmjs.com/package/shields), ...}, 
-    "fluffy": {tags: ["S81A_9S", ...], ...},
-    "good": {["EF4_aD2", ...], ...},
-    ...
-  }
-  
-  constructor(options:{objects?, tags?}?) {
-    _objects = objects
-    for (object, objects) {
-      for (tag, tags) {
-        _tagged[tag][]
-      }
-    }
-  }
-  
-  function tags(resource) {
-    return _objects[resource].tags
-  }
-  
-  function tag(label) {
-    return _tags
-  }
-  
-  tag.get count() {
-    return tag.length
-  }
-  
-  set resource tag
-  reorder resource tags
-  resource tag properties override
-  set tag colour
-  delete tag
-  remove resource
-  validate references
-  resources more complex than a URL
-  change sort type
-  set tag rank
-  get all tags
-  get all resources that have tag
-  get all resources that dont have tag
-  custom tag styling, incl' mobile views
-  define behaviour/relationship of tag <-> resource
-}
+[![Actions Status](https://github.com/j-m/tagable/workflows/Node%20CI/badge.svg)](https://github.com/j-m/tagable/actions)
 
-private generateID() {
-  //probably some import idk, just need to make some way to reference, but may use a real language like C instead
-  //if JS is really pass-by-value for primitives and pass-by-reference for objects, then this may not be needed
-}
+## About
 
-import(tagablejson) {
-  JSON.parse(read(tagablejson))
-  //edit permission comes solely from whoever controls the source
-}
-export(tagablejson){
-  write(tagablejson, JSON.stringify([_objects, _tags]))
-}
+The idea is to provide a simple platform that can be used to tag abstracted resources.  
 
+## Development
 
-```
+> The implementation is subject to major changes until a v1 release, from which point versioning will be [semver](https://semver.org)
+
+This project is built with Typescript.  
+To get started, run `npm install` to install dependencies.  
+Make sure that your environment is not set to `production` or you will not install the dev dependencies.
+Feel free to open Issues/PRs with suggestions/problems/improvements.
+
+### Maintainers
+
+- Jonathan Marsh - [j-m](https://github.com/j-m)
+
+## See also
+
+[oaty](https://github.com/jmsv/oaty)
+
+### Changelog
+
+#### `0.1.0`
+
+- Initial proof of concept
