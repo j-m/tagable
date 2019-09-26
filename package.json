@@ -1,5 +1,5 @@
 {
-  "name": "tagable",
+  "name": "@j-m/tagable",
   "version": "0.1.0",
   "description": "System to tag abstracted objects",
   "main": "dist/src/Tagable.js",
@@ -9,6 +9,9 @@
     "build": "tsc",
     "test": "mocha --require ts-node/register test/**/*.spec.ts --reporter list",
     "format": "tslint --project . --fix"
+  },
+  "publishConfig": { 
+    "registry": "https://npm.pkg.github.com/" 
   },
   "repository": {
     "type": "git",
