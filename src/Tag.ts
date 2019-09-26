@@ -12,7 +12,7 @@ export class Tag {
   constructor(
     public title: string,
     public description?: string,
-    public imageURL?: string,
+    public data?: any,
     public relationships?: Array<[string, Relation]>) {
   }
 }

@@ -7,10 +7,10 @@ declare enum Relation {
 export declare class Tag {
     title: string;
     description?: string | undefined;
-    imageURL?: string | undefined;
+    data?: any;
     relationships?: [string, Relation][] | undefined;
     id: string;
-    constructor(title: string, description?: string | undefined, imageURL?: string | undefined, relationships?: [string, Relation][] | undefined);
+    constructor(title: string, description?: string | undefined, data?: any, relationships?: [string, Relation][] | undefined);
 }
 export {};
 //# sourceMappingURL=Tag.d.ts.map

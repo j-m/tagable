@@ -1,18 +1,20 @@
 import { Resource } from './Resource';
 import { Tag } from './Tag';
 import { Tagged } from './Tagged';
+export interface TagableData {
+    resources?: Resource[];
+    tagged?: Tagged[];
+    tags?: Tag[];
+}
 export declare class Tagable {
     private _resources;
-    private _tags;
     private _tagged;
-    constructor(resources?: Resource[], tags?: Tag[], tagged?: Tagged[]);
+    private _tags;
+    constructor(data?: TagableData);
     readonly resources: object[];
+    readonly tagged: object[];
     readonly tags: object[];
-    import(data: {
-        tags: Tag[];
-        tagged: Tagged[];
-        resources: Resource[];
-    }): void;
+    import(data: TagableData): void;
     export(): string;
     load(path: string): void;
     save(path: string): void;

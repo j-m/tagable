@@ -7,12 +7,20 @@ var randomstring_1 = __importDefault(require("randomstring"));
 function generateID() {
     return randomstring_1.default.generate(7);
 }
-function generateTagID() {
-    return "t" + generateID();
+function generateTagID(tagIDs) {
+    var id;
+    do {
+        id = "t" + generateID();
+    } while (tagIDs && tagIDs.includes(id));
+    return id;
 }
 exports.generateTagID = generateTagID;
-function generateResourceID() {
-    return "r" + generateID();
+function generateResourceID(resourceIDs) {
+    var id;
+    do {
+        id = "r" + generateID();
+    } while (resourceIDs && resourceIDs.includes(id));
+    return id;
 }
 exports.generateResourceID = generateResourceID;
 //# sourceMappingURL=ID.js.map

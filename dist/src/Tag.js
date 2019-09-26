@@ -9,10 +9,10 @@ var Relation;
     Relation[Relation["Inverse"] = 3] = "Inverse";
 })(Relation || (Relation = {}));
 var Tag = (function () {
-    function Tag(title, description, imageURL, relationships) {
+    function Tag(title, description, data, relationships) {
         this.title = title;
         this.description = description;
-        this.imageURL = imageURL;
+        this.data = data;
         this.relationships = relationships;
         this.id = ID_1.generateTagID();
     }
