@@ -1,9 +1,6 @@
 name: latest
 
-on:
-  push:
-    branches:
-      - 'TAG-*'
+on: push
 
 jobs:
   build:
