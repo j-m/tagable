@@ -1,76 +1,40 @@
-# tagable
-Depends on jmsv/oaty
+<p align="center">
+  <img src="./img/logo.png" alt="tagable"/>
+  <br/>
+  <a href="https://github.com/j-m/tagable/actions">
+    <img src="https://github.com/j-m/tagable/workflows/master/badge.svg" alt="master"/>
+  </a>
+  <a href="https://github.com/j-m/tagable/actions">
+    <img src="https://github.com/j-m/tagable/workflows/latest/badge.svg" alt="latest"/>
+  </a>
+</p>
 
-```
-new tagable() {
-  _objects = {
-    "c:/pics/cat.png": {id: "S81A_9S", tags: ["cute", "fluffy"] //displays in same order},
-    "c:/pics/dog.png": {id: "EF4_aD2", tags: ["cute", "good"]},
-    ...
-  }
-  
-  _sort = rank | count | alphabetical 
-  
-  _tags = {
-    "cute": {tags: ["S81A_9S", "EF4_aD2", ...], shield: shielder(see https://www.npmjs.com/package/shields), ...}, 
-    "fluffy": {tags: ["S81A_9S", ...], ...},
-    "good": {["EF4_aD2", ...], description: "the goodest of the bois. none of these mythical 'bad' ones.", ...},
-    ...
-  }
-  
-  constructor(options:{objects?, tags?}?) {
-    _objects = objects
-    for (object, objects) {
-      for (tag, tags) {
-        _tagged[tag][]
-      }
-    }
-  }
-  
-  function tags(resource) {
-    return _objects[resource].tags
-  }
-  
-  function tag(label) {
-    return _tags
-  }
-  
-  tag.get count() {
-    return tag.length
-  }
-  
-  set resource tag
-  reorder resource tags
-  resource tag properties override
-  set tag colour
-  delete tag
-  remove resource
-  validate references
-  resources more complex than a URL
-  change sort type
-  set tag rank
-  get all tags
-  get all resources that have tag
-  get all resources that dont have tag
-  custom tag styling, incl' mobile views
-  define behaviour/relationship of tag <-> resource
-}
+## About
 
-private generateID() {
-  //probably some import idk, just need to make some way to reference, but may use a real language like C instead
-  //if JS is really pass-by-value for primitives and pass-by-reference for objects, then this may not be needed
-}
+The idea is to provide a simple platform that can be used to tag abstracted resources.  
 
-import(tagablejson) {
-  JSON.parse(read(tagablejson))
-  //edit permission comes solely from whoever controls the source
-}
-export(tagablejson){
-  write(tagablejson, JSON.stringify([_objects, _tags]))
-}
+## Development
 
+> The implementation is subject to major changes until a v1 release, from which point versioning will be [semver](https://semver.org)
 
-```
+This project is built with Typescript.  
+To get started, run `npm install` to install dependencies.
 
-Tagables should support different optional and required fields for a tag, e.g. description.
-Tag relations. Opposite of. Similar to. Subclass of.
+Feel free to open issues or pull requests with any suggestions, problems, or improvements you may have.
+
+### Maintainers
+
+- Jonathan Marsh - [j-m](https://github.com/j-m)
+
+## See also
+
+- [oaty](https://github.com/jmsv/oaty): Transposes the tagable's data to boost performance
+- [spotable](https://github.com/j-m/spotable): Tagable for Spotify. Create playlists on the fly by filtering tags that you define
+- [PicTag](https://github/com/j-m/PicTag): Forget traditional albums, this is an implementation of tagable that lets you tag images so that one picture can belong to many albums.
+- [What-to-look-for](https://github.com/j-m/What-to-look-for): a better way to remind yourself of past blunders, and organise yourself better, using tagable's tag ancestory structure
+
+## Changelog
+
+#### `0.1.0`
+
+- Initial proof of concept
