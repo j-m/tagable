@@ -79,6 +79,12 @@ var Tagable = (function () {
     Tagable.prototype.tagResource = function (resource, tag) {
         this._tagged.push(new Tagged_1.Tagged(resource.id, tag.id));
     };
+    Tagable.prototype.getTagsByResourceID = function (id) {
+        this._tagged.get('resourceID', id);
+    };
+    Tagable.prototype.getResourcesByTagID = function (id) {
+        this._tagged.get('tagID', id);
+    };
     return Tagable;
 }());
 exports.Tagable = Tagable;

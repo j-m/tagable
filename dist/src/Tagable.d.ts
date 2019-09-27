@@ -23,5 +23,7 @@ export declare class Tagable {
     addTag(tag: Tag): void;
     getTagBy(property: string, value: any): Tag | undefined;
     tagResource(resource: Resource, tag: Tag): void;
+    getTagsByResourceID(id: string): void;
+    getResourcesByTagID(id: string): void;
 }
 //# sourceMappingURL=Tagable.d.ts.map
