@@ -84,4 +84,12 @@ export class Tagable {
   public tagResource(resource: Resource, tag: Tag) {
     this._tagged.push(new Tagged(resource.id, tag.id))
   }
+
+  public getTagsByResourceID(id: string) {
+    this._tagged.get('resourceID', id)
+  }
+
+  public getResourcesByTagID(id: string) {
+    this._tagged.get('tagID', id)
+  }
 }

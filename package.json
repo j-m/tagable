@@ -1,6 +1,6 @@
 {
   "name": "@j-m/tagable",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "System to tag abstracted objects",
   "main": "dist/src/Tagable.js",
   "types": "dist/src/Tagable.d.ts",
