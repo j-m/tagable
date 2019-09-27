@@ -35,6 +35,10 @@ Feel free to open issues or pull requests with any suggestions, problems, or imp
 
 ## Changelog
 
+#### `0.1.2`
+
+- Committed `dist` files with `npm build`
+
 #### `0.1.1`
 
 - Added `getTagsByResourceID` and `getResourcesByTagID`
