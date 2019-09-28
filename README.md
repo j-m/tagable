@@ -35,6 +35,10 @@ Feel free to open issues or pull requests with any suggestions, problems, or imp
 
 ## Changelog
 
+#### `0.1.3` 
+
+- Removed dependency on FS (TAG-12)
+
 #### `0.1.2`
 
 - Committed `dist` files with `npm build`
