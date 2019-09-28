@@ -1,5 +1,3 @@
-import { readFileSync, writeFileSync } from 'fs'
-
 import { OatyArray } from 'oaty'
 
 import { generateResourceID, generateTagID } from './ID'
@@ -48,15 +46,6 @@ export class Tagable {
       tagged: this.tagged,
       resources: this.resources
     })
-  }
-
-  public load(path: string) {
-    const data: TagableData = JSON.parse(readFileSync(path, 'utf-8'))
-    this.import(data)
-  }
-
-  public save(path: string) {
-    writeFileSync(path, this.export());
   }
 
   public addResource(resource: Resource) {

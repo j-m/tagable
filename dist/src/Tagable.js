@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var fs_1 = require("fs");
 var oaty_1 = require("oaty");
 var ID_1 = require("./ID");
 var Tagged_1 = require("./Tagged");
@@ -50,13 +49,6 @@ var Tagable = (function () {
             tagged: this.tagged,
             resources: this.resources
         });
-    };
-    Tagable.prototype.load = function (path) {
-        var data = JSON.parse(fs_1.readFileSync(path, 'utf-8'));
-        this.import(data);
-    };
-    Tagable.prototype.save = function (path) {
-        fs_1.writeFileSync(path, this.export());
     };
     Tagable.prototype.addResource = function (resource) {
         if (this._resources.get('id', resource.id)) {

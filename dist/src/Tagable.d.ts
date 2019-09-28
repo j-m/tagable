@@ -16,8 +16,6 @@ export declare class Tagable {
     readonly tags: object[];
     import(data: TagableData): void;
     export(): string;
-    load(path: string): void;
-    save(path: string): void;
     addResource(resource: Resource): void;
     getResourceBy(property: string, value: any): Resource | undefined;
     addTag(tag: Tag): void;
