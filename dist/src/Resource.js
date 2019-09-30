@@ -1,11 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var ID_1 = require("./ID");
 var Resource = (function () {
-    function Resource(source, data) {
-        this.source = source;
+    function Resource(id, data) {
+        this.id = id;
         this.data = data;
-        this.id = ID_1.generateResourceID();
     }
     return Resource;
 }());

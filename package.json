@@ -40,7 +40,6 @@
     "typescript": "^3.5.3"
   },
   "dependencies": {
-    "oaty": "^0.3.0",
-    "randomstring": "^1.1.5"
+    "oaty": "^0.3.0"
   }
 }

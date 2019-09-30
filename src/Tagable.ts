@@ -1,6 +1,5 @@
 import { OatyArray } from 'oaty'
 
-import { generateResourceID, generateTagID } from './ID'
 import { Resource } from './Resource'
 import { Tag } from './Tag'
 import { Tagged } from './Tagged'
@@ -49,9 +48,6 @@ export class Tagable {
   }
 
   public addResource(resource: Resource) {
-    if (this._resources.get('id', resource.id)) {
-      resource.id = generateResourceID(this._resources.get('id'))
-    }
     this._resources.push(resource)
   }
 
@@ -60,9 +56,6 @@ export class Tagable {
   }
 
   public addTag(tag: Tag) {
-    if (this._tags.get('id', tag.id)) {
-      tag.id = generateTagID(this._tags.get('id'))
-    }
     this._tags.push(tag)
   }
 

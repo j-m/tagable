@@ -1,5 +1,3 @@
-import { generateTagID } from './ID'
-
 enum Relation {
   Parent,
   Similar,
@@ -8,10 +6,8 @@ enum Relation {
 }
 
 export class Tag {
-  public id: string = generateTagID()
   constructor(
-    public title: string,
-    public description?: string,
+    public id: string,
     public data?: any,
     public relationships?: Array<[string, Relation]>) {
   }

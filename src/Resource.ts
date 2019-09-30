@@ -1,7 +1,6 @@
-import { generateResourceID } from './ID'
-
 export class Resource {
-  public id: string = generateResourceID()
-  constructor(public source: string, public data?: any) {
+  constructor(
+    public id: string, 
+    public data?: any) {
   }
 }

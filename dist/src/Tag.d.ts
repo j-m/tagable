@@ -5,12 +5,10 @@ declare enum Relation {
     Inverse = 3
 }
 export declare class Tag {
-    title: string;
-    description?: string | undefined;
+    id: string;
     data?: any;
     relationships?: [string, Relation][] | undefined;
-    id: string;
-    constructor(title: string, description?: string | undefined, data?: any, relationships?: [string, Relation][] | undefined);
+    constructor(id: string, data?: any, relationships?: [string, Relation][] | undefined);
 }
 export {};
 //# sourceMappingURL=Tag.d.ts.map

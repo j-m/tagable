@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var oaty_1 = require("oaty");
-var ID_1 = require("./ID");
 var Tagged_1 = require("./Tagged");
 var Tagable = (function () {
     function Tagable(data) {
@@ -51,18 +50,12 @@ var Tagable = (function () {
         });
     };
     Tagable.prototype.addResource = function (resource) {
-        if (this._resources.get('id', resource.id)) {
-            resource.id = ID_1.generateResourceID(this._resources.get('id'));
-        }
         this._resources.push(resource);
     };
     Tagable.prototype.getResourceBy = function (property, value) {
         return this._resources.get(property, value);
     };
     Tagable.prototype.addTag = function (tag) {
-        if (this._tags.get('id', tag.id)) {
-            tag.id = ID_1.generateTagID(this._tags.get('id'));
-        }
         this._tags.push(tag);
     };
     Tagable.prototype.getTagBy = function (property, value) {
