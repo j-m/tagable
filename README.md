@@ -35,11 +35,16 @@ Feel free to open issues or pull requests with any suggestions, problems, or imp
 
 ## Changelog
 
-#### `0.1.4` 
+#### `0.2.0`
+
+- Implementation change. ID now required for Tag and Resource classes.
+- Remove dependency on `randomstring`
+
+#### `0.1.4`
 
 - Added returns to new getters
 
-#### `0.1.3` 
+#### `0.1.3`
 
 - Removed dependency on FS (TAG-12)
 
