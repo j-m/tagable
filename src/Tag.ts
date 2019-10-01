@@ -1,14 +1,20 @@
 enum Relation {
   Parent,
   Similar,
-  Child,
+  Children,
   Inverse
 }
 
-export class Tag {
+export interface Relationships {
+  [Relation.Parent]?: string,
+  [Relation.Similar]?: string[],
+  [Relation.Children]?: string[],
+  [Relation.Inverse]?: string[]
+}
+
+export class Tag<T = any> {
   constructor(
-    public id: string,
-    public data?: any,
-    public relationships?: Array<[string, Relation]>) {
+    public data?: T,
+    public relationships?: Relationships) {
   }
 }

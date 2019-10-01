@@ -2,41 +2,44 @@ import { OatyArray } from 'oaty'
 
 import { Resource } from './Resource'
 import { Tag } from './Tag'
-import { Tagged } from './Tagged'
 
-export interface TagableData {
-  resources?: Resource[]
-  tagged?: Tagged[]
-  tags?: Tag[]
+export interface IResources {[key: string]: Resource<any>}
+export interface ITags {[key: string]: Tag<any>}
+export interface ITagged {resourceID: string, tagID: string}
+
+export interface ITagableData {
+  resources?: IResources
+  tags?: ITags
+  tagged?: ITagged[]
 }
 
 export class Tagable {
-  private _resources: OatyArray
   private _tagged: OatyArray
-  private _tags: OatyArray
+  private _resources: IResources
+  private _tags: ITags
 
-  constructor(data: TagableData = {}) {
-    this._resources = new OatyArray(data.resources || [])
+  constructor(data: ITagableData = {}) {
+    this._tags = data.tags || {}
+    this._resources = data.resources || {}
     this._tagged = new OatyArray(data.tagged || [])
-    this._tags = new OatyArray(data.tags || [])
   }
-  
-  get resources() {
-    return this._resources.data
+
+  get resources(): IResources {
+    return this._resources
   }
 
   get tagged() {
     return this._tagged.data
   }
 
-  get tags() {
-    return this._tags.data
+  get tags(): ITags {
+    return this._tags
   }
 
-  public import(data: TagableData) {
-    if (data.tags){ this._tags.push(...data.tags) }
-    if (data.tagged){ this._tagged.push(...data.tagged) }
-    if (data.resources){ this._resources.push(...data.resources) }
+  public import(data: ITagableData) {
+    Object.assign(this._tags, data.tags)
+    Object.assign(this._resources, data.resources)
+    this._tagged.push(data.tagged || [])
   }
 
   public export(): string {
@@ -47,31 +50,31 @@ export class Tagable {
     })
   }
 
-  public addResource(resource: Resource) {
-    this._resources.push(resource)
+  public addResource<R>(resourceID: string, resource: Resource<R>) {
+    if (this._resources[resourceID]) {
+      throw Error(`Resource ID '${resourceID}' is already in use`)
+    }
+    this._resources[resourceID] = resource
   }
 
-  public getResourceBy(property: string, value: any): Resource | undefined {
-    return this._resources.get(property, value)
+  public addTag<T>(tagID: string, tag: Tag<T>) {
+    if (this._resources[tagID]) {
+      throw Error(`Tag ID '${tagID}' is already in use`)
+    }
+    this._tags[tagID] = tag
   }
 
-  public addTag(tag: Tag) {
-    this._tags.push(tag)
+  public tagResource(tagged: Tagged) {
+    this._tagged.push(tagged)
   }
 
-  public getTagBy(property: string, value: any): Tag | undefined {
-    return this._tags.get(property, value)
+  public getTags(resourceID: string): Tag<any>[] {
+    const tagged = this._tagged.get('resourceID', resourceID)
+    return tagged.map((tag: Tagged) => (this._tags[tag.tagID]))
   }
 
-  public tagResource(resource: Resource, tag: Tag) {
-    this._tagged.push(new Tagged(resource.id, tag.id))
-  }
-
-  public getTagsByResourceID(id: string): Tag[] {
-    return this._tagged.get('resourceID', id)
-  }
-
-  public getResourcesByTagID(id: string): Resource[] {
-    return this._tagged.get('tagID', id)
+  public getResources(tagID: string): Resource<any>[] {
+    const tagged = this._tagged.get('tagID', tagID)
+    return tagged.map((tag: Tagged) => (this._resources[tag.resourceID]))
   }
 }

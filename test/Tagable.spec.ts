@@ -2,8 +2,7 @@ import { expect } from 'chai'
 
 import { Resource } from '../src/Resource'
 import { Tag } from '../src/Tag'
-import { Tagable, TagableData } from '../src/Tagable'
-import { Tagged } from '../src/Tagged'
+import { Tagable, TagableData, Tagged, Resources, Tags } from '../src/Tagable'
 
 let fixture: Fixture
 
@@ -25,30 +24,30 @@ describe('Tagable', () => {
     context('with no data', () => {
       it('returns an empty array', () => {
         fixture.givenTagable()
-        fixture.thenResourcesEquals([])
+        fixture.thenResourcesEquals({})
       })
     })
     context('with initialised data', () => {
       it('returns initialised data', () => {
         const resource: Resource = new Resource("penguin")
-        fixture.givenTagable({resources: [resource]})
-        fixture.thenResourcesEquals([resource])
+        fixture.givenTagable({resources: {"penguin": resource}})
+        fixture.thenResourcesEquals({"penguin": resource})
       })
     })
     context('with imported data', () => {
       it('returns imported data', () => {
         const resource: Resource = new Resource("penguin")
         fixture.givenTagable()
-        fixture.whenImportIsCalled({resources: [resource]})
-        fixture.thenResourcesEquals([resource])
+        fixture.whenImportIsCalled({resources: {"penguin": resource}})
+        fixture.thenResourcesEquals({"penguin": resource})
       })
     })
     context('with added data', () => {
       it('returns added data', () => {
         const resource: Resource = new Resource("penguin")
         fixture.givenTagable()
-        fixture.whenAddResourceIsCalled(resource)
-        fixture.thenResourcesEquals([resource])
+        fixture.whenAddResourceIsCalled("penguin", resource)
+        fixture.thenResourcesEquals({"penguin": resource})
       })
     })
   })
@@ -57,30 +56,30 @@ describe('Tagable', () => {
     context('with no data', () => {
       it('returns an empty array', () => {
         fixture.givenTagable()
-        fixture.thenTagsEquals([])
+        fixture.thenTagsEquals({})
       })
     })
     context('with initialised data', () => {
       it('returns initialised data', () => {
         const tag: Tag = new Tag("cute")
-        fixture.givenTagable({tags: [tag]})
-        fixture.thenTagsEquals([tag])
+        fixture.givenTagable({tags: {"cute": tag}})
+        fixture.thenTagsEquals({"cute": tag})
       })
     })
     context('with imported data', () => {
       it('returns imported data', () => {
         const tag: Tag = new Tag("cute")
         fixture.givenTagable()
-        fixture.whenImportIsCalled({tags: [tag]})
-        fixture.thenTagsEquals([tag])
+        fixture.whenImportIsCalled({tags: {"cute": tag}})
+        fixture.thenTagsEquals({"cute": tag})
       })
     })
     context('with added data', () => {
       it('returns added data', () => {
         const tag: Tag = new Tag("cute")
         fixture.givenTagable()
-        fixture.whenAddTagIsCalled(tag)
-        fixture.thenTagsEquals([tag])
+        fixture.whenAddTagIsCalled("cute", tag)
+        fixture.thenTagsEquals({"cute": tag})
       })
     })
   })
@@ -94,14 +93,14 @@ describe('Tagable', () => {
     })
     context('with initialised data', () => {
       it('returns initialised data', () => {
-        const tagged: Tagged = new Tagged("r123", "t123")
+        const tagged = {resourceID: "r123", tagID: "t123"}
         fixture.givenTagable({tagged: [tagged]})
         fixture.thenTaggedEquals([tagged])
       })
     })
     context('with imported data', () => {
       it('returns imported data', () => {
-        const tagged: Tagged = new Tagged("r123", "t123")
+        const tagged = {resourceID: "r123", tagID: "t123"}
         fixture.givenTagable()
         fixture.whenImportIsCalled({tagged: [tagged]})
         fixture.thenTaggedEquals([tagged])
@@ -112,10 +111,10 @@ describe('Tagable', () => {
         const resource: Resource = new Resource("penguin")
         const tag: Tag = new Tag("cute")
         fixture.givenTagable()
-        fixture.whenAddResourceIsCalled(resource)
-        fixture.whenAddTagIsCalled(tag)
-        fixture.whenTagResourceIsCalled(resource, tag)
-        fixture.thenTaggedEquals([{resourceID: resource.id, tagID: tag.id}])
+        fixture.whenAddResourceIsCalled("penguin", resource)
+        fixture.whenAddTagIsCalled("cute", tag)
+        fixture.whenTagResourceIsCalled("penguin", "cute")
+        fixture.thenTaggedEquals([{resourceID: "penguin", tagID: "cute"}])
       })
     })
   })
@@ -128,23 +127,23 @@ class Fixture {
     this._tagable = new Tagable(data)
   }
 
-  public whenAddResourceIsCalled(resource: Resource) {
-    this._tagable!.addResource(resource)
+  public whenAddResourceIsCalled(id: string, resource: Resource) {
+    this._tagable!.addResource(id, resource)
   }
 
-  public whenAddTagIsCalled(tag: Tag) {
-    this._tagable!.addTag(tag)
+  public whenAddTagIsCalled(id: string, tag: Tag) {
+    this._tagable!.addTag(id, tag)
   }
 
   public whenImportIsCalled(data: TagableData) {
     this._tagable!.import(data)
   }
 
-  public whenTagResourceIsCalled(resource: Resource, tag: Tag) {
-    this._tagable!.tagResource(resource, tag)
+  public whenTagResourceIsCalled(resourceID: string, tagID: string) {
+    this._tagable!.tagResource({resourceID, tagID})
   }
 
-  public thenResourcesEquals(resources: Resource[]) {
+  public thenResourcesEquals(resources: Resources) {
     expect(this._tagable!.resources).to.deep.equal(resources)
   }
 
@@ -152,7 +151,7 @@ class Fixture {
     expect(this._tagable!.tagged).to.deep.equal(tagged)
   }
 
-  public thenTagsEquals(tags: Tag[]) {
+  public thenTagsEquals(tags: Tags) {
     expect(this._tagable!.tags).to.deep.equal(tags)
   }
 
