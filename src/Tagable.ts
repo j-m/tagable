@@ -46,7 +46,7 @@ export class Tagable {
     return JSON.stringify({
       tags: this.tags,
       tagged: this.tagged,
-      resources: this.resources
+      resources: this.resources,
     })
   }
 
@@ -68,12 +68,12 @@ export class Tagable {
     this._tagged.push(tagged)
   }
 
-  public getTags(resourceID: string): Tag<any>[] {
+  public getTags(resourceID: string): Array<Tag<any>> {
     const tagged = this._tagged.get('resourceID', resourceID)
     return tagged.map((tag: Tagged) => (this._tags[tag.tagID]))
   }
 
-  public getResources(tagID: string): Resource<any>[] {
+  public getResources(tagID: string): Array<Resource<any>> {
     const tagged = this._tagged.get('tagID', tagID)
     return tagged.map((tag: Tagged) => (this._resources[tag.resourceID]))
   }

@@ -2,7 +2,7 @@ enum Relation {
   Parent,
   Similar,
   Children,
-  Inverse
+  Inverse,
 }
 
 export interface Relationships {
