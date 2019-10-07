@@ -7,9 +7,16 @@
   "scripts": {
     "benchmark": "ts-node benchmark/index.spec.ts --outDir ./benchmark",
     "build": "tsc",
-    "test": "mocha --require ts-node/register test/**/*.spec.ts --reporter list",
-    "format": "tslint --project . --fix"
+    "coverage": "nyc mocha --require ts-node/register test/**/*.spec.ts",
+    "lint": "tslint --project . --fix",
+    "test": "mocha --require ts-node/register test/**/*.spec.ts --reporter list"
   },
+  "pre-commit": [
+    "lint",
+    "build",
+    "test",
+    "coverage"
+  ],
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
@@ -34,6 +41,7 @@
     "@types/node": "^12.7.11",
     "chai": "^4.2.0",
     "mocha": "^6.2.1",
+    "pre-commit": "^1.2.2",
     "ts-node": "^8.4.1",
     "tslint": "^5.20.0",
     "typescript": "^3.6.3"
