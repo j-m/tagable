@@ -4,7 +4,6 @@ var chai_1 = require("chai");
 var Resource_1 = require("../src/Resource");
 var Tag_1 = require("../src/Tag");
 var Tagable_1 = require("../src/Tagable");
-var Tagged_1 = require("../src/Tagged");
 var fixture;
 describe('Tagable', function () {
     beforeEach(function () {
@@ -28,7 +27,7 @@ describe('Tagable', function () {
         context('with initialised data', function () {
             it('returns initialised data', function () {
                 var resource = new Resource_1.Resource("penguin");
-                fixture.givenTagable({ resources: [resource] });
+                fixture.givenTagable({ resources: { "penguin": resource } });
                 fixture.thenResourcesEquals([resource]);
             });
         });
@@ -36,7 +35,7 @@ describe('Tagable', function () {
             it('returns imported data', function () {
                 var resource = new Resource_1.Resource("penguin");
                 fixture.givenTagable();
-                fixture.whenImportIsCalled({ resources: [resource] });
+                fixture.whenImportIsCalled({ resources: { "penguin": resource } });
                 fixture.thenResourcesEquals([resource]);
             });
         });
@@ -44,7 +43,7 @@ describe('Tagable', function () {
             it('returns added data', function () {
                 var resource = new Resource_1.Resource("penguin");
                 fixture.givenTagable();
-                fixture.whenAddResourceIsCalled(resource);
+                fixture.whenAddResourceIsCalled("penguin", resource);
                 fixture.thenResourcesEquals([resource]);
             });
         });
@@ -59,7 +58,7 @@ describe('Tagable', function () {
         context('with initialised data', function () {
             it('returns initialised data', function () {
                 var tag = new Tag_1.Tag("cute");
-                fixture.givenTagable({ tags: [tag] });
+                fixture.givenTagable({ tags: { "cute": tag } });
                 fixture.thenTagsEquals([tag]);
             });
         });
@@ -67,7 +66,7 @@ describe('Tagable', function () {
             it('returns imported data', function () {
                 var tag = new Tag_1.Tag("cute");
                 fixture.givenTagable();
-                fixture.whenImportIsCalled({ tags: [tag] });
+                fixture.whenImportIsCalled({ tags: { "cute": tag } });
                 fixture.thenTagsEquals([tag]);
             });
         });
@@ -75,7 +74,7 @@ describe('Tagable', function () {
             it('returns added data', function () {
                 var tag = new Tag_1.Tag("cute");
                 fixture.givenTagable();
-                fixture.whenAddTagIsCalled(tag);
+                fixture.whenAddTagIsCalled("cute", tag);
                 fixture.thenTagsEquals([tag]);
             });
         });
@@ -89,14 +88,14 @@ describe('Tagable', function () {
         });
         context('with initialised data', function () {
             it('returns initialised data', function () {
-                var tagged = new Tagged_1.Tagged("r123", "t123");
+                var tagged = { resourceID: "r123", tagID: "t123" };
                 fixture.givenTagable({ tagged: [tagged] });
                 fixture.thenTaggedEquals([tagged]);
             });
         });
         context('with imported data', function () {
             it('returns imported data', function () {
-                var tagged = new Tagged_1.Tagged("r123", "t123");
+                var tagged = { resourceID: "r123", tagID: "t123" };
                 fixture.givenTagable();
                 fixture.whenImportIsCalled({ tagged: [tagged] });
                 fixture.thenTaggedEquals([tagged]);
@@ -107,10 +106,10 @@ describe('Tagable', function () {
                 var resource = new Resource_1.Resource("penguin");
                 var tag = new Tag_1.Tag("cute");
                 fixture.givenTagable();
-                fixture.whenAddResourceIsCalled(resource);
-                fixture.whenAddTagIsCalled(tag);
-                fixture.whenTagResourceIsCalled(resource, tag);
-                fixture.thenTaggedEquals([{ resourceID: resource.id, tagID: tag.id }]);
+                fixture.whenAddResourceIsCalled("penguin", resource);
+                fixture.whenAddTagIsCalled("cute", tag);
+                fixture.whenTagResourceIsCalled("penguin", "cute");
+                fixture.thenTaggedEquals([{ resourceID: "penguin", tagID: "cute" }]);
             });
         });
     });
@@ -121,17 +120,17 @@ var Fixture = (function () {
     Fixture.prototype.givenTagable = function (data) {
         this._tagable = new Tagable_1.Tagable(data);
     };
-    Fixture.prototype.whenAddResourceIsCalled = function (resource) {
-        this._tagable.addResource(resource);
+    Fixture.prototype.whenAddResourceIsCalled = function (id, resource) {
+        this._tagable.addResource(id, resource);
     };
-    Fixture.prototype.whenAddTagIsCalled = function (tag) {
-        this._tagable.addTag(tag);
+    Fixture.prototype.whenAddTagIsCalled = function (id, tag) {
+        this._tagable.addTag(id, tag);
     };
     Fixture.prototype.whenImportIsCalled = function (data) {
         this._tagable.import(data);
     };
-    Fixture.prototype.whenTagResourceIsCalled = function (resource, tag) {
-        this._tagable.tagResource(resource, tag);
+    Fixture.prototype.whenTagResourceIsCalled = function (resourceID, tagID) {
+        this._tagable.tagResource(resourceID, tagID);
     };
     Fixture.prototype.thenResourcesEquals = function (resources) {
         chai_1.expect(this._tagable.resources).to.deep.equal(resources);

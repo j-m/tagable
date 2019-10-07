@@ -1,8 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Resource = (function () {
-    function Resource(id, data) {
-        this.id = id;
+    function Resource(data) {
         this.data = data;
     }
     return Resource;
