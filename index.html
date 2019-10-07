@@ -1,0 +1,60 @@
+<script>
+import { Tagable } from './dist/src/Tagable.js'
+
+let tagable = new Tagable()
+
+</script>
+
+<form>
+  <fieldset>
+    <legend>Create new resource</legend>
+    <label for="resourceSource">Source*</label><input id="resourceSource" required/>
+    <p class="description">This is how you identify your resources, usually the source, e.g. file name, song title, or any short description.</p>
+    <label for="resourceData">Resource Data</label><input id="resourceData"/>
+    <p class="description">This is where you can store any additional data your resource may require.</p>
+  </fieldset>
+</form>
+<form>
+  <fieldset>
+    <legend>Create new tag</legend>
+    <label for="tagTitle">Tag Title*</label><input id="tagID" required/>
+    <p class="description">This how you identify the tag, usually the summary of the tag, e.g. cute, fluffy, 💩</p>
+    <label for="tagRelations">Tag Relations</label><input id="tagRelations"/>
+    <p class="description">A way to connect tags</p>
+    <label for="tagData">Tag Data</label><input id="tagData"/>
+    <p class="description">This is where you can store any additional data your tag may require, e.g. a HTML img tag</p>
+  </fieldset>
+</form>
+<form>
+    <fieldset>
+      <legend>Tag a resource</legend>
+      <select>
+        <option>Resource</option>
+      </select>
+      <select>
+        <option>Tag</option>
+      </select>
+    </fieldset>
+  </form>
+<form>
+  <fieldset>
+    <legend>Create a new tag relationship</legend>
+    <select>
+      <option>Tag1</option>
+    </select>
+    <select>
+      <option>Parent</option>
+      <option>Similar</option>
+      <option>Child</option>
+      <option>Inverse</option>
+    </select>
+    <select>
+      <option>Tag2</option>
+    </select>
+  </fieldset>
+</form>
+  
+
+<textarea readonly>
+
+</textarea>
