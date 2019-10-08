@@ -21,14 +21,14 @@ export declare class Tagable {
     private _tags;
     constructor(data?: TagableData);
     readonly resources: Resources;
-    readonly tagged: object[];
+    readonly tagged: Tagged[];
     readonly tags: Tags;
     import(data: TagableData): void;
     export(): string;
-    addResource<R>(resourceID: string, resource: Resource<R>): void;
-    addTag<T>(tagID: string, tag: Tag<T>): void;
-    tagResource(resourceID: string, tagID: string): void;
-    getTags(resourceID: string): Tag<any>[];
-    getResources(tagID: string): Resource<any>[];
+    addResource<R = any>(resourceID: string, resource: Resource<R>): void;
+    addTag<T = any>(tagID: string, tag: Tag<T>): void;
+    tagResource(tagged: Tagged): void;
+    getTags<T = any>(resourceID: string): Array<Tag<T>>;
+    getResources<R = any>(tagID: string): Array<Resource<R>>;
 }
 //# sourceMappingURL=Tagable.d.ts.map

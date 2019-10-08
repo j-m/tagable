@@ -7,7 +7,7 @@
   "scripts": {
     "benchmark": "ts-node benchmark/index.spec.ts --outDir ./benchmark",
     "build": "tsc",
-    "coverage": "nyc mocha --require ts-node/register test/**/*.spec.ts",
+    "coverage": "nyc npm run test",
     "lint": "tslint --project . --fix",
     "test": "mocha --require ts-node/register test/**/*.spec.ts --reporter list"
   },
@@ -55,14 +55,14 @@
       ".ts"
     ],
     "include": [
-      "index.ts"
+      "src/*"
     ],
     "reporter": [
       "text",
       "lcov"
     ],
     "all": true,
-    "check-coverage": true, 
+    "check-coverage": true,
     "statements": 100,
     "functions": 100,
     "branches": 100,

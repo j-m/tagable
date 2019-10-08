@@ -4,9 +4,9 @@ var oaty_1 = require("oaty");
 var Tagable = (function () {
     function Tagable(data) {
         if (data === void 0) { data = {}; }
-        this._resources = data.resources || {};
         this._tags = data.tags || {};
-        this._tagged = new oaty_1.OatyArray(data.tagged || []);
+        this._resources = data.resources || {};
+        this._tagged = new oaty_1.OatyArray(data.tagged);
     }
     Object.defineProperty(Tagable.prototype, "resources", {
         get: function () {
@@ -30,15 +30,16 @@ var Tagable = (function () {
         configurable: true
     });
     Tagable.prototype.import = function (data) {
+        var _a;
         Object.assign(this._tags, data.tags);
-        Object.assign(this._tagged, data.tagged);
         Object.assign(this._resources, data.resources);
+        (_a = this._tagged).push.apply(_a, data.tagged || []);
     };
     Tagable.prototype.export = function () {
         return JSON.stringify({
-            tags: this.tags,
+            resources: this.resources,
             tagged: this.tagged,
-            resources: this.resources
+            tags: this.tags
         });
     };
     Tagable.prototype.addResource = function (resourceID, resource) {
@@ -48,13 +49,19 @@ var Tagable = (function () {
         this._resources[resourceID] = resource;
     };
     Tagable.prototype.addTag = function (tagID, tag) {
-        if (this._resources[tagID]) {
+        if (this._tags[tagID]) {
             throw Error("Tag ID '" + tagID + "' is already in use");
         }
         this._tags[tagID] = tag;
     };
-    Tagable.prototype.tagResource = function (resourceID, tagID) {
-        this._tagged.push([resourceID, tagID]);
+    Tagable.prototype.tagResource = function (tagged) {
+        if (this._resources[tagged.resourceID] === undefined) {
+            throw Error("Unknown resource '" + tagged.resourceID + "'");
+        }
+        if (this._tags[tagged.tagID] === undefined) {
+            throw Error("Unknown tag '" + tagged.tagID + "'");
+        }
+        this._tagged.push(tagged);
     };
     Tagable.prototype.getTags = function (resourceID) {
         var _this = this;
