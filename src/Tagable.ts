@@ -3,28 +3,28 @@ import { OatyArray } from 'oaty'
 import { Resource } from './Resource'
 import { Tag } from './Tag'
 
-export type Resources = {[key: string]: Resource<any>}
-export type Tags = {[key: string]: Tag<any>}
+export type Resources<R> = {[key: string]: Resource<R>}
+export type Tags<T> = {[key: string]: Tag<T>}
 export type Tagged = {resourceID: string, tagID: string}
 
-export interface TagableData {
-  resources?: Resources
-  tags?: Tags
+export interface TagableData<R, T> {
+  resources?: Resources<R>
+  tags?: Tags<T>
   tagged?: Tagged[]
 }
 
-export class Tagable {
+export class Tagable<R = any, T = any> {
   private _tagged: OatyArray<Tagged>
-  private _resources: Resources
-  private _tags: Tags
+  private _resources: Resources<R>
+  private _tags: Tags<T>
 
-  constructor(data: TagableData = {}) {
+  constructor(data: TagableData<R, T> = {}) {
     this._tags = data.tags || {}
     this._resources = data.resources || {}
     this._tagged = new OatyArray<Tagged>(data.tagged)
   }
 
-  get resources(): Resources {
+  get resources(): Resources<R> {
     return this._resources
   }
 
@@ -32,11 +32,11 @@ export class Tagable {
     return this._tagged.data
   }
 
-  get tags(): Tags {
+  get tags(): Tags<T> {
     return this._tags
   }
 
-  public import(data: TagableData) {
+  public import(data: TagableData<R, T>) {
     Object.assign(this._tags, data.tags)
     Object.assign(this._resources, data.resources)
     this._tagged.push(...data.tagged || [])
@@ -50,14 +50,14 @@ export class Tagable {
     })
   }
 
-  public addResource<R = any>(resourceID: string, resource: Resource<R>) {
+  public addResource(resourceID: string, resource: Resource<R>) {
     if (this._resources[resourceID]) {
       throw Error(`Resource ID '${resourceID}' is already in use`)
     }
     this._resources[resourceID] = resource
   }
 
-  public addTag<T = any>(tagID: string, tag: Tag<T>) {
+  public addTag(tagID: string, tag: Tag<T>) {
     if (this._tags[tagID]) {
       throw Error(`Tag ID '${tagID}' is already in use`)
     }
@@ -74,13 +74,23 @@ export class Tagable {
     this._tagged.push(tagged)
   }
 
-  public getTags<T = any>(resourceID: string): Array<Tag<T>> {
+  public getTags(resourceID: string): Tags<T> {
     const tagged: Tagged[] = this._tagged.get('resourceID', resourceID) as Tagged[]
-    return tagged.map((tag: Tagged) => (this._tags[tag.tagID]))
+    if (tagged === undefined) {
+      throw Error(`Unknown resource '${resourceID}'`)
+    }
+    const result: Tags<T> = {}
+    tagged.forEach((tag) => {result[tag.tagID] = this._tags[tag.tagID]})
+    return result
   }
 
-  public getResources<R = any>(tagID: string): Array<Resource<R>> {
+  public getResources(tagID: string): Resources<R> {
     const tagged: Tagged[] = this._tagged.get('tagID', tagID) as Tagged[]
-    return tagged.map((tag: Tagged) => (this._resources[tag.resourceID]))
+    if (tagged === undefined) {
+      throw Error(`Unknown tag '${tagID}'`)
+    }
+    const result: Resources<R> = {}
+    tagged.forEach((tag) => {result[tag.resourceID] = this._resources[tag.resourceID]})
+    return result
   }
 }

@@ -177,38 +177,62 @@ describe('Tagable', () => {
     })
   })
 
-  describe('.getResources()', () => {
+  describe('.getResources(...)', () => {
     context('with no data', () => {
       it('returns no data', () => {
         // fixture.givenTagable()
         // fixture.thenGetResourcesEquals('penguin', [])
       })
     })
+    context('with a missing tag', () => {
+      it('throws an error', () => {
+        fixture.givenTagable()
+        expect(() => {
+          const resource: Resource = new Resource()
+          const tag: Tag = new Tag()
+          const tagged: Tagged = {resourceID: 'penguin', tagID: 'cute'}
+          fixture.givenTagable({resources: {penguin: resource}, tags: {cute: tag}, tagged: [tagged]})
+          fixture.thenGetResourcesEquals('ugly', {})
+        }).to.throw(Error, `Unknown tag 'ugly'`)
+      })
+    })
     context('with data', () => {
       it('returns tags', () => {
         const resource: Resource = new Resource()
         const tag: Tag = new Tag()
         const tagged: Tagged = {resourceID: 'penguin', tagID: 'cute'}
         fixture.givenTagable({resources: {penguin: resource}, tags: {cute: tag}, tagged: [tagged]})
-        fixture.thenGetResourcesEquals('cute', [resource])
+        fixture.thenGetResourcesEquals('cute', {penguin: resource})
       })
     })
   })
 
-  describe('.getTags()', () => {
+  describe('.getTags(...)', () => {
     context('with no data', () => {
       it('returns no data', () => {
         // fixture.givenTagable()
         // fixture.thenGetTagsEquals('cute', [])
       })
     })
+    context('with a missing resource', () => {
+      it('throws an error', () => {
+        fixture.givenTagable()
+        expect(() => {
+          const resource: Resource = new Resource()
+          const tag: Tag = new Tag()
+          const tagged: Tagged = {resourceID: 'penguin', tagID: 'cute'}
+          fixture.givenTagable({resources: {penguin: resource}, tags: {cute: tag}, tagged: [tagged]})
+          fixture.thenGetTagsEquals('unicorn', {})
+        }).to.throw(Error, `Unknown resource 'unicorn'`)
+      })
+    })
     context('with data', () => {
       it('returns tags', () => {
         const resource: Resource = new Resource()
         const tag: Tag = new Tag()
         const tagged: Tagged = {resourceID: 'penguin', tagID: 'cute'}
         fixture.givenTagable({resources: {penguin: resource}, tags: {cute: tag}, tagged: [tagged]})
-        fixture.thenGetTagsEquals('penguin', [tag])
+        fixture.thenGetTagsEquals('penguin', {cute: tag})
       })
     })
   })
@@ -272,8 +296,8 @@ describe('Tagable', () => {
 class Fixture {
   private _tagable: Tagable | undefined
 
-  public givenTagable(data?: TagableData) {
-    this._tagable = new Tagable(data)
+  public givenTagable<R = any, T = any>(data?: TagableData<R, T>) {
+    this._tagable = new Tagable<R, T>(data)
   }
 
   public whenAddResourceIsCalled(id: string, resource: Resource) {
@@ -284,7 +308,7 @@ class Fixture {
     this._tagable!.addTag(id, tag)
   }
 
-  public whenImportIsCalled(data: TagableData) {
+  public whenImportIsCalled<R = any, T = any>(data: TagableData<R, T>) {
     this._tagable!.import(data)
   }
 
@@ -296,15 +320,15 @@ class Fixture {
     expect(this._tagable!.export()).to.equal(exported)
   }
 
-  public thenGetResourcesEquals<R>(tagID: string, resources: Array<Resource<R>>) {
+  public thenGetResourcesEquals<R = any>(tagID: string, resources: Resources<R>) {
     expect(this._tagable!.getResources(tagID)).to.deep.equal(resources)
   }
 
-  public thenGetTagsEquals<T>(resourceID: string, tags: Array<Tag<T>>) {
+  public thenGetTagsEquals<T = any>(resourceID: string, tags: Tags<T>) {
     expect(this._tagable!.getTags(resourceID)).to.deep.equal(tags)
   }
 
-  public thenResourcesEquals(resources: Resources) {
+  public thenResourcesEquals<R = any>(resources: Resources<R>) {
     expect(this._tagable!.resources).to.deep.equal(resources)
   }
 
@@ -312,7 +336,7 @@ class Fixture {
     expect(this._tagable!.tagged).to.deep.equal(tagged)
   }
 
-  public thenTagsEquals(tags: Tags) {
+  public thenTagsEquals<T = any>(tags: Tags<T>) {
     expect(this._tagable!.tags).to.deep.equal(tags)
   }
 
