@@ -168,9 +168,21 @@ describe('Tagable', function () {
             });
         });
     });
-    describe('.getResources()', function () {
+    describe('.getResources(...)', function () {
         context('with no data', function () {
             it('returns no data', function () {
+            });
+        });
+        context('with a missing tag', function () {
+            it('throws an error', function () {
+                fixture.givenTagable();
+                chai_1.expect(function () {
+                    var resource = new Resource_1.Resource();
+                    var tag = new Tag_1.Tag();
+                    var tagged = { resourceID: 'penguin', tagID: 'cute' };
+                    fixture.givenTagable({ resources: { penguin: resource }, tags: { cute: tag }, tagged: [tagged] });
+                    fixture.thenGetResourcesEquals('ugly', {});
+                }).to.throw(Error, "Unknown tag 'ugly'");
             });
         });
         context('with data', function () {
@@ -179,13 +191,25 @@ describe('Tagable', function () {
                 var tag = new Tag_1.Tag();
                 var tagged = { resourceID: 'penguin', tagID: 'cute' };
                 fixture.givenTagable({ resources: { penguin: resource }, tags: { cute: tag }, tagged: [tagged] });
-                fixture.thenGetResourcesEquals('cute', [resource]);
+                fixture.thenGetResourcesEquals('cute', { penguin: resource });
             });
         });
     });
-    describe('.getTags()', function () {
+    describe('.getTags(...)', function () {
         context('with no data', function () {
             it('returns no data', function () {
+            });
+        });
+        context('with a missing resource', function () {
+            it('throws an error', function () {
+                fixture.givenTagable();
+                chai_1.expect(function () {
+                    var resource = new Resource_1.Resource();
+                    var tag = new Tag_1.Tag();
+                    var tagged = { resourceID: 'penguin', tagID: 'cute' };
+                    fixture.givenTagable({ resources: { penguin: resource }, tags: { cute: tag }, tagged: [tagged] });
+                    fixture.thenGetTagsEquals('unicorn', {});
+                }).to.throw(Error, "Unknown resource 'unicorn'");
             });
         });
         context('with data', function () {
@@ -194,7 +218,7 @@ describe('Tagable', function () {
                 var tag = new Tag_1.Tag();
                 var tagged = { resourceID: 'penguin', tagID: 'cute' };
                 fixture.givenTagable({ resources: { penguin: resource }, tags: { cute: tag }, tagged: [tagged] });
-                fixture.thenGetTagsEquals('penguin', [tag]);
+                fixture.thenGetTagsEquals('penguin', { cute: tag });
             });
         });
     });

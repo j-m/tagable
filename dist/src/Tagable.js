@@ -66,12 +66,22 @@ var Tagable = (function () {
     Tagable.prototype.getTags = function (resourceID) {
         var _this = this;
         var tagged = this._tagged.get('resourceID', resourceID);
-        return tagged.map(function (tag) { return (_this._tags[tag.tagID]); });
+        if (tagged === undefined) {
+            throw Error("Unknown resource '" + resourceID + "'");
+        }
+        var result = {};
+        tagged.forEach(function (tag) { result[tag.tagID] = _this._tags[tag.tagID]; });
+        return result;
     };
     Tagable.prototype.getResources = function (tagID) {
         var _this = this;
         var tagged = this._tagged.get('tagID', tagID);
-        return tagged.map(function (tag) { return (_this._resources[tag.resourceID]); });
+        if (tagged === undefined) {
+            throw Error("Unknown tag '" + tagID + "'");
+        }
+        var result = {};
+        tagged.forEach(function (tag) { result[tag.resourceID] = _this._resources[tag.resourceID]; });
+        return result;
     };
     return Tagable;
 }());
