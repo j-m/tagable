@@ -176,13 +176,23 @@ describe('Tagable', function () {
         context('with a missing tag', function () {
             it('throws an error', function () {
                 fixture.givenTagable();
+                var resource = new Resource_1.Resource();
+                var tag = new Tag_1.Tag();
+                var tagged = { resourceID: 'penguin', tagID: 'cute' };
+                fixture.givenTagable({ resources: { penguin: resource }, tags: { cute: tag }, tagged: [tagged] });
                 chai_1.expect(function () {
-                    var resource = new Resource_1.Resource();
-                    var tag = new Tag_1.Tag();
-                    var tagged = { resourceID: 'penguin', tagID: 'cute' };
-                    fixture.givenTagable({ resources: { penguin: resource }, tags: { cute: tag }, tagged: [tagged] });
                     fixture.thenGetResourcesEquals('ugly', {});
-                }).to.throw(Error, "Unknown tag 'ugly'");
+                }).to.throw(ReferenceError, "Unknown tag 'ugly'");
+            });
+        });
+        context('with no resources', function () {
+            it('returns an empty object', function () {
+                fixture.givenTagable();
+                var resource = new Resource_1.Resource();
+                var tag = new Tag_1.Tag();
+                var tagged = { resourceID: 'unicorn', tagID: 'magical' };
+                fixture.givenTagable({ resources: { penguin: resource }, tags: { cute: tag }, tagged: [tagged] });
+                fixture.thenGetResourcesEquals('cute', {});
             });
         });
         context('with data', function () {
@@ -203,13 +213,23 @@ describe('Tagable', function () {
         context('with a missing resource', function () {
             it('throws an error', function () {
                 fixture.givenTagable();
+                var resource = new Resource_1.Resource();
+                var tag = new Tag_1.Tag();
+                var tagged = { resourceID: 'penguin', tagID: 'cute' };
+                fixture.givenTagable({ resources: { penguin: resource }, tags: { cute: tag }, tagged: [tagged] });
                 chai_1.expect(function () {
-                    var resource = new Resource_1.Resource();
-                    var tag = new Tag_1.Tag();
-                    var tagged = { resourceID: 'penguin', tagID: 'cute' };
-                    fixture.givenTagable({ resources: { penguin: resource }, tags: { cute: tag }, tagged: [tagged] });
                     fixture.thenGetTagsEquals('unicorn', {});
-                }).to.throw(Error, "Unknown resource 'unicorn'");
+                }).to.throw(ReferenceError, "Unknown resource 'unicorn'");
+            });
+        });
+        context('with no tags', function () {
+            it('returns an empty object', function () {
+                fixture.givenTagable();
+                var resource = new Resource_1.Resource();
+                var tag = new Tag_1.Tag();
+                var tagged = { resourceID: 'unicorn', tagID: 'magical' };
+                fixture.givenTagable({ resources: { penguin: resource }, tags: { cute: tag }, tagged: [tagged] });
+                fixture.thenGetTagsEquals('penguin', {});
             });
         });
         context('with data', function () {
@@ -261,7 +281,7 @@ describe('Tagable', function () {
                 fixture.givenTagable({ tags: { cute: tag } });
                 chai_1.expect(function () {
                     fixture.whenTagResourceIsCalled('penguin', 'cute');
-                }).to.throw(Error, "Unknown resource 'penguin'");
+                }).to.throw(ReferenceError, "Unknown resource 'penguin'");
             });
         });
         context('with unknown tag', function () {
@@ -270,7 +290,7 @@ describe('Tagable', function () {
                 fixture.givenTagable({ resources: { penguin: resource } });
                 chai_1.expect(function () {
                     fixture.whenTagResourceIsCalled('penguin', 'cute');
-                }).to.throw(Error, "Unknown tag 'cute'");
+                }).to.throw(ReferenceError, "Unknown tag 'cute'");
             });
         });
     });

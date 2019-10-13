@@ -56,18 +56,21 @@ var Tagable = (function () {
     };
     Tagable.prototype.tagResource = function (tagged) {
         if (this._resources[tagged.resourceID] === undefined) {
-            throw Error("Unknown resource '" + tagged.resourceID + "'");
+            throw ReferenceError("Unknown resource '" + tagged.resourceID + "'");
         }
         if (this._tags[tagged.tagID] === undefined) {
-            throw Error("Unknown tag '" + tagged.tagID + "'");
+            throw ReferenceError("Unknown tag '" + tagged.tagID + "'");
         }
         this._tagged.push(tagged);
     };
     Tagable.prototype.getTags = function (resourceID) {
         var _this = this;
+        if (this._resources[resourceID] === undefined) {
+            throw ReferenceError("Unknown resource '" + resourceID + "'");
+        }
         var tagged = this._tagged.get('resourceID', resourceID);
         if (tagged === undefined) {
-            throw Error("Unknown resource '" + resourceID + "'");
+            return {};
         }
         var result = {};
         tagged.forEach(function (tag) { result[tag.tagID] = _this._tags[tag.tagID]; });
@@ -75,9 +78,12 @@ var Tagable = (function () {
     };
     Tagable.prototype.getResources = function (tagID) {
         var _this = this;
+        if (this._tags[tagID] === undefined) {
+            throw ReferenceError("Unknown tag '" + tagID + "'");
+        }
         var tagged = this._tagged.get('tagID', tagID);
         if (tagged === undefined) {
-            throw Error("Unknown tag '" + tagID + "'");
+            return {};
         }
         var result = {};
         tagged.forEach(function (tag) { result[tag.resourceID] = _this._resources[tag.resourceID]; });

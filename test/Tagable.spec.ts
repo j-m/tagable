@@ -187,13 +187,23 @@ describe('Tagable', () => {
     context('with a missing tag', () => {
       it('throws an error', () => {
         fixture.givenTagable()
+        const resource: Resource = new Resource()
+        const tag: Tag = new Tag()
+        const tagged: Tagged = {resourceID: 'penguin', tagID: 'cute'}
+        fixture.givenTagable({resources: {penguin: resource}, tags: {cute: tag}, tagged: [tagged]})
         expect(() => {
-          const resource: Resource = new Resource()
-          const tag: Tag = new Tag()
-          const tagged: Tagged = {resourceID: 'penguin', tagID: 'cute'}
-          fixture.givenTagable({resources: {penguin: resource}, tags: {cute: tag}, tagged: [tagged]})
           fixture.thenGetResourcesEquals('ugly', {})
-        }).to.throw(Error, `Unknown tag 'ugly'`)
+        }).to.throw(ReferenceError, `Unknown tag 'ugly'`)
+      })
+    })
+    context('with no resources', () => {
+      it('returns an empty object', () => {
+        fixture.givenTagable()
+        const resource: Resource = new Resource()
+        const tag: Tag = new Tag()
+        const tagged: Tagged = {resourceID: 'unicorn', tagID: 'magical'}
+        fixture.givenTagable({resources: {penguin: resource}, tags: {cute: tag}, tagged: [tagged]})
+        fixture.thenGetResourcesEquals('cute', {})
       })
     })
     context('with data', () => {
@@ -217,13 +227,23 @@ describe('Tagable', () => {
     context('with a missing resource', () => {
       it('throws an error', () => {
         fixture.givenTagable()
+        const resource: Resource = new Resource()
+        const tag: Tag = new Tag()
+        const tagged: Tagged = {resourceID: 'penguin', tagID: 'cute'}
+        fixture.givenTagable({resources: {penguin: resource}, tags: {cute: tag}, tagged: [tagged]})
         expect(() => {
-          const resource: Resource = new Resource()
-          const tag: Tag = new Tag()
-          const tagged: Tagged = {resourceID: 'penguin', tagID: 'cute'}
-          fixture.givenTagable({resources: {penguin: resource}, tags: {cute: tag}, tagged: [tagged]})
           fixture.thenGetTagsEquals('unicorn', {})
-        }).to.throw(Error, `Unknown resource 'unicorn'`)
+        }).to.throw(ReferenceError, `Unknown resource 'unicorn'`)
+      })
+    })
+    context('with no tags', () => {
+      it('returns an empty object', () => {
+        fixture.givenTagable()
+        const resource: Resource = new Resource()
+        const tag: Tag = new Tag()
+        const tagged: Tagged = {resourceID: 'unicorn', tagID: 'magical'}
+        fixture.givenTagable({resources: {penguin: resource}, tags: {cute: tag}, tagged: [tagged]})
+        fixture.thenGetTagsEquals('penguin', {})
       })
     })
     context('with data', () => {
@@ -277,7 +297,7 @@ describe('Tagable', () => {
         fixture.givenTagable({tags: {cute: tag}})
         expect(() => {
           fixture.whenTagResourceIsCalled('penguin', 'cute')
-        }).to.throw(Error, `Unknown resource 'penguin'`)
+        }).to.throw(ReferenceError, `Unknown resource 'penguin'`)
       })
     })
     context('with unknown tag', () => {
@@ -286,7 +306,7 @@ describe('Tagable', () => {
         fixture.givenTagable({resources: {penguin: resource}})
         expect(() => {
           fixture.whenTagResourceIsCalled('penguin', 'cute')
-        }).to.throw(Error, `Unknown tag 'cute'`)
+        }).to.throw(ReferenceError, `Unknown tag 'cute'`)
       })
     })
   })

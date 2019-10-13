@@ -66,18 +66,21 @@ export class Tagable<R = any, T = any> {
 
   public tagResource(tagged: Tagged) {
     if (this._resources[tagged.resourceID] === undefined) {
-      throw Error(`Unknown resource '${tagged.resourceID}'`)
+      throw ReferenceError(`Unknown resource '${tagged.resourceID}'`)
     }
     if (this._tags[tagged.tagID] === undefined) {
-      throw Error(`Unknown tag '${tagged.tagID}'`)
+      throw ReferenceError(`Unknown tag '${tagged.tagID}'`)
     }
     this._tagged.push(tagged)
   }
 
   public getTags(resourceID: string): Tags<T> {
+    if (this._resources[resourceID] === undefined) {
+      throw ReferenceError(`Unknown resource '${resourceID}'`)
+    }
     const tagged: Tagged[] = this._tagged.get('resourceID', resourceID) as Tagged[]
     if (tagged === undefined) {
-      throw Error(`Unknown resource '${resourceID}'`)
+      return {}
     }
     const result: Tags<T> = {}
     tagged.forEach((tag) => {result[tag.tagID] = this._tags[tag.tagID]})
@@ -85,9 +88,12 @@ export class Tagable<R = any, T = any> {
   }
 
   public getResources(tagID: string): Resources<R> {
+    if (this._tags[tagID] === undefined) {
+      throw ReferenceError(`Unknown tag '${tagID}'`)
+    }
     const tagged: Tagged[] = this._tagged.get('tagID', tagID) as Tagged[]
     if (tagged === undefined) {
-      throw Error(`Unknown tag '${tagID}'`)
+      return {}
     }
     const result: Resources<R> = {}
     tagged.forEach((tag) => {result[tag.resourceID] = this._resources[tag.resourceID]})
