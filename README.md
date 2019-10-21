@@ -35,6 +35,15 @@ Feel free to open issues or pull requests with any suggestions, problems, or imp
 
 ## Changelog
 
+#### `0.4.0`
+
+- Implementation change.
+  - Getters now return an object
+- Finalised generics works.
+
+#### `0.3.1`
+Sync GitHub packages and NPM
+
 #### `0.3.0`
 
 - Implementation change.

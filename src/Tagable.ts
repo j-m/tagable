@@ -3,78 +3,100 @@ import { OatyArray } from 'oaty'
 import { Resource } from './Resource'
 import { Tag } from './Tag'
 
-export interface IResources {[key: string]: Resource<any>}
-export interface ITags {[key: string]: Tag<any>}
-export interface ITagged {resourceID: string, tagID: string}
+export type Resources<R> = {[key: string]: Resource<R>}
+export type Tags<T> = {[key: string]: Tag<T>}
+export type Tagged = {resourceID: string, tagID: string}
 
-export interface ITagableData {
-  resources?: IResources
-  tags?: ITags
-  tagged?: ITagged[]
+export interface TagableData<R, T> {
+  resources?: Resources<R>
+  tags?: Tags<T>
+  tagged?: Tagged[]
 }
 
-export class Tagable {
-  private _tagged: OatyArray
-  private _resources: IResources
-  private _tags: ITags
+export class Tagable<R = any, T = any> {
+  private _tagged: OatyArray<Tagged>
+  private _resources: Resources<R>
+  private _tags: Tags<T>
 
-  constructor(data: ITagableData = {}) {
+  constructor(data: TagableData<R, T> = {}) {
     this._tags = data.tags || {}
     this._resources = data.resources || {}
-    this._tagged = new OatyArray(data.tagged || [])
+    this._tagged = new OatyArray<Tagged>(data.tagged)
   }
 
-  get resources(): IResources {
+  get resources(): Resources<R> {
     return this._resources
   }
 
-  get tagged() {
+  get tagged(): Tagged[] {
     return this._tagged.data
   }
 
-  get tags(): ITags {
+  get tags(): Tags<T> {
     return this._tags
   }
 
-  public import(data: ITagableData) {
+  public import(data: TagableData<R, T>) {
     Object.assign(this._tags, data.tags)
     Object.assign(this._resources, data.resources)
-    this._tagged.push(data.tagged || [])
+    this._tagged.push(...data.tagged || [])
   }
 
   public export(): string {
     return JSON.stringify({
-      tags: this.tags,
+      resources: this.resources,
       tagged: this.tagged,
-      resources: this.resources
+      tags: this.tags
     })
   }
 
-  public addResource<R>(resourceID: string, resource: Resource<R>) {
+  public addResource(resourceID: string, resource: Resource<R>) {
     if (this._resources[resourceID]) {
       throw Error(`Resource ID '${resourceID}' is already in use`)
     }
     this._resources[resourceID] = resource
   }
 
-  public addTag<T>(tagID: string, tag: Tag<T>) {
-    if (this._resources[tagID]) {
+  public addTag(tagID: string, tag: Tag<T>) {
+    if (this._tags[tagID]) {
       throw Error(`Tag ID '${tagID}' is already in use`)
     }
     this._tags[tagID] = tag
   }
 
   public tagResource(tagged: Tagged) {
+    if (this._resources[tagged.resourceID] === undefined) {
+      throw ReferenceError(`Unknown resource '${tagged.resourceID}'`)
+    }
+    if (this._tags[tagged.tagID] === undefined) {
+      throw ReferenceError(`Unknown tag '${tagged.tagID}'`)
+    }
     this._tagged.push(tagged)
   }
 
-  public getTags(resourceID: string): Tag<any>[] {
-    const tagged = this._tagged.get('resourceID', resourceID)
-    return tagged.map((tag: Tagged) => (this._tags[tag.tagID]))
+  public getTags(resourceID: string): Tags<T> {
+    if (this._resources[resourceID] === undefined) {
+      throw ReferenceError(`Unknown resource '${resourceID}'`)
+    }
+    const tagged: Tagged[] = this._tagged.get('resourceID', resourceID) as Tagged[]
+    if (tagged === undefined) {
+      return {}
+    }
+    const result: Tags<T> = {}
+    tagged.forEach((tag) => {result[tag.tagID] = this._tags[tag.tagID]})
+    return result
   }
 
-  public getResources(tagID: string): Resource<any>[] {
-    const tagged = this._tagged.get('tagID', tagID)
-    return tagged.map((tag: Tagged) => (this._resources[tag.resourceID]))
+  public getResources(tagID: string): Resources<R> {
+    if (this._tags[tagID] === undefined) {
+      throw ReferenceError(`Unknown tag '${tagID}'`)
+    }
+    const tagged: Tagged[] = this._tagged.get('tagID', tagID) as Tagged[]
+    if (tagged === undefined) {
+      return {}
+    }
+    const result: Resources<R> = {}
+    tagged.forEach((tag) => {result[tag.resourceID] = this._resources[tag.resourceID]})
+    return result
   }
 }

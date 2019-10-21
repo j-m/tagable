@@ -1,15 +1,22 @@
 {
   "name": "@j-m/tagable",
-  "version": "0.3.0",
+  "version": "0.4.1",
   "description": "System to tag abstracted objects",
   "main": "dist/src/Tagable.js",
   "types": "dist/src/Tagable.d.ts",
   "scripts": {
     "benchmark": "ts-node benchmark/index.spec.ts --outDir ./benchmark",
     "build": "tsc",
-    "test": "mocha --require ts-node/register test/**/*.spec.ts --reporter list",
-    "format": "tslint --project . --fix"
+    "coverage": "nyc npm run test",
+    "lint": "tslint --project . --fix",
+    "test": "mocha --require ts-node/register test/**/*.spec.ts --reporter list"
   },
+  "pre-commit": [
+    "lint",
+    "build",
+    "test",
+    "coverage"
+  ],
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
@@ -29,16 +36,36 @@
   },
   "homepage": "https://github.com/j-m/tagable#readme",
   "devDependencies": {
-    "@types/chai": "^4.2.0",
+    "@types/chai": "^4.2.3",
     "@types/mocha": "^5.2.7",
-    "@types/node": "^12.7.2",
+    "@types/node": "^12.7.11",
     "chai": "^4.2.0",
-    "mocha": "^6.2.0",
-    "ts-node": "^8.3.0",
-    "tslint": "^5.19.0",
-    "typescript": "^3.5.3"
+    "mocha": "^6.2.1",
+    "nyc": "^14.1.1",
+    "pre-commit": "^1.2.2",
+    "ts-node": "^8.4.1",
+    "tslint": "^5.20.0",
+    "typescript": "^3.6.3"
   },
   "dependencies": {
-    "oaty": "^0.3.0"
+    "oaty": "^0.4.0"
+  },
+  "nyc": {
+    "extension": [
+      ".ts"
+    ],
+    "include": [
+      "src/*"
+    ],
+    "reporter": [
+      "text",
+      "lcov"
+    ],
+    "all": true,
+    "check-coverage": true,
+    "statements": 100,
+    "functions": 100,
+    "branches": 100,
+    "lines": 100
   }
 }
