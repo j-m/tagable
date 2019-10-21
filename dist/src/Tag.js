@@ -4,12 +4,11 @@ var Relation;
 (function (Relation) {
     Relation[Relation["Parent"] = 0] = "Parent";
     Relation[Relation["Similar"] = 1] = "Similar";
-    Relation[Relation["Child"] = 2] = "Child";
+    Relation[Relation["Children"] = 2] = "Children";
     Relation[Relation["Inverse"] = 3] = "Inverse";
 })(Relation || (Relation = {}));
 var Tag = (function () {
-    function Tag(id, data, relationships) {
-        this.id = id;
+    function Tag(data, relationships) {
         this.data = data;
         this.relationships = relationships;
     }

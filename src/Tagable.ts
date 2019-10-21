@@ -2,76 +2,101 @@ import { OatyArray } from 'oaty'
 
 import { Resource } from './Resource'
 import { Tag } from './Tag'
-import { Tagged } from './Tagged'
 
-export interface TagableData {
-  resources?: Resource[]
+export type Resources<R> = {[key: string]: Resource<R>}
+export type Tags<T> = {[key: string]: Tag<T>}
+export type Tagged = {resourceID: string, tagID: string}
+
+export interface TagableData<R, T> {
+  resources?: Resources<R>
+  tags?: Tags<T>
   tagged?: Tagged[]
-  tags?: Tag[]
 }
 
-export class Tagable {
-  private _resources: OatyArray
-  private _tagged: OatyArray
-  private _tags: OatyArray
+export class Tagable<R = any, T = any> {
+  private _tagged: OatyArray<Tagged>
+  private _resources: Resources<R>
+  private _tags: Tags<T>
 
-  constructor(data: TagableData = {}) {
-    this._resources = new OatyArray(data.resources || [])
-    this._tagged = new OatyArray(data.tagged || [])
-    this._tags = new OatyArray(data.tags || [])
-  }
-  
-  get resources() {
-    return this._resources.data
+  constructor(data: TagableData<R, T> = {}) {
+    this._tags = data.tags || {}
+    this._resources = data.resources || {}
+    this._tagged = new OatyArray<Tagged>(data.tagged)
   }
 
-  get tagged() {
+  get resources(): Resources<R> {
+    return this._resources
+  }
+
+  get tagged(): Tagged[] {
     return this._tagged.data
   }
 
-  get tags() {
-    return this._tags.data
+  get tags(): Tags<T> {
+    return this._tags
   }
 
-  public import(data: TagableData) {
-    if (data.tags){ this._tags.push(...data.tags) }
-    if (data.tagged){ this._tagged.push(...data.tagged) }
-    if (data.resources){ this._resources.push(...data.resources) }
+  public import(data: TagableData<R, T>) {
+    Object.assign(this._tags, data.tags)
+    Object.assign(this._resources, data.resources)
+    this._tagged.push(...data.tagged || [])
   }
 
   public export(): string {
     return JSON.stringify({
-      tags: this.tags,
+      resources: this.resources,
       tagged: this.tagged,
-      resources: this.resources
+      tags: this.tags
     })
   }
 
-  public addResource(resource: Resource) {
-    this._resources.push(resource)
+  public addResource(resourceID: string, resource: Resource<R>) {
+    if (this._resources[resourceID]) {
+      throw Error(`Resource ID '${resourceID}' is already in use`)
+    }
+    this._resources[resourceID] = resource
   }
 
-  public getResourceBy(property: string, value: any): Resource | undefined {
-    return this._resources.get(property, value)
+  public addTag(tagID: string, tag: Tag<T>) {
+    if (this._tags[tagID]) {
+      throw Error(`Tag ID '${tagID}' is already in use`)
+    }
+    this._tags[tagID] = tag
   }
 
-  public addTag(tag: Tag) {
-    this._tags.push(tag)
+  public tagResource(tagged: Tagged) {
+    if (this._resources[tagged.resourceID] === undefined) {
+      throw ReferenceError(`Unknown resource '${tagged.resourceID}'`)
+    }
+    if (this._tags[tagged.tagID] === undefined) {
+      throw ReferenceError(`Unknown tag '${tagged.tagID}'`)
+    }
+    this._tagged.push(tagged)
   }
 
-  public getTagBy(property: string, value: any): Tag | undefined {
-    return this._tags.get(property, value)
+  public getTags(resourceID: string): Tags<T> {
+    if (this._resources[resourceID] === undefined) {
+      throw ReferenceError(`Unknown resource '${resourceID}'`)
+    }
+    const tagged: Tagged[] = this._tagged.get('resourceID', resourceID) as Tagged[]
+    if (tagged === undefined) {
+      return {}
+    }
+    const result: Tags<T> = {}
+    tagged.forEach((tag) => {result[tag.tagID] = this._tags[tag.tagID]})
+    return result
   }
 
-  public tagResource(resource: Resource, tag: Tag) {
-    this._tagged.push(new Tagged(resource.id, tag.id))
-  }
-
-  public getTagsByResourceID(id: string): Tag[] {
-    return this._tagged.get('resourceID', id)
-  }
-
-  public getResourcesByTagID(id: string): Resource[] {
-    return this._tagged.get('tagID', id)
+  public getResources(tagID: string): Resources<R> {
+    if (this._tags[tagID] === undefined) {
+      throw ReferenceError(`Unknown tag '${tagID}'`)
+    }
+    const tagged: Tagged[] = this._tagged.get('tagID', tagID) as Tagged[]
+    if (tagged === undefined) {
+      return {}
+    }
+    const result: Resources<R> = {}
+    tagged.forEach((tag) => {result[tag.resourceID] = this._resources[tag.resourceID]})
+    return result
   }
 }

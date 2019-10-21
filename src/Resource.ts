@@ -1,6 +1,4 @@
-export class Resource {
-  constructor(
-    public id: string, 
-    public data?: any) {
+export class Resource<T = any> {
+  constructor(public data?: T) {
   }
 }
