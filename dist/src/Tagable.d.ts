@@ -1,34 +1,34 @@
 import { Resource } from './Resource';
 import { Tag } from './Tag';
-export declare type Resources = {
-    [key: string]: Resource<any>;
+export declare type Resources<R> = {
+    [key: string]: Resource<R>;
 };
-export declare type Tags = {
-    [key: string]: Tag<any>;
+export declare type Tags<T> = {
+    [key: string]: Tag<T>;
 };
 export declare type Tagged = {
     resourceID: string;
     tagID: string;
 };
-export interface TagableData {
-    resources?: Resources;
-    tags?: Tags;
+export interface TagableData<R, T> {
+    resources?: Resources<R>;
+    tags?: Tags<T>;
     tagged?: Tagged[];
 }
-export declare class Tagable {
+export declare class Tagable<R = any, T = any> {
     private _tagged;
     private _resources;
     private _tags;
-    constructor(data?: TagableData);
-    readonly resources: Resources;
-    readonly tagged: object[];
-    readonly tags: Tags;
-    import(data: TagableData): void;
+    constructor(data?: TagableData<R, T>);
+    readonly resources: Resources<R>;
+    readonly tagged: Tagged[];
+    readonly tags: Tags<T>;
+    import(data: TagableData<R, T>): void;
     export(): string;
-    addResource<R>(resourceID: string, resource: Resource<R>): void;
-    addTag<T>(tagID: string, tag: Tag<T>): void;
-    tagResource(resourceID: string, tagID: string): void;
-    getTags(resourceID: string): Tag<any>[];
-    getResources(tagID: string): Resource<any>[];
+    addResource(resourceID: string, resource: Resource<R>): void;
+    addTag(tagID: string, tag: Tag<T>): void;
+    tagResource(tagged: Tagged): void;
+    getTags(resourceID: string): Tags<T>;
+    getResources(tagID: string): Resources<R>;
 }
 //# sourceMappingURL=Tagable.d.ts.map
