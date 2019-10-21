@@ -2,16 +2,17 @@
   <img src="./img/logo.png" alt="tagable"/>
   <br/>
   <a href="https://github.com/j-m/tagable/actions">
-    <img src="https://github.com/j-m/tagable/workflows/master/badge.svg" alt="master"/>
+    <img src="https://github.com/j-m/tagable/workflows/master/badge.svg" alt="master stability"/>
   </a>
   <a href="https://github.com/j-m/tagable/actions">
-    <img src="https://github.com/j-m/tagable/workflows/latest/badge.svg" alt="latest"/>
+    <img src="https://github.com/j-m/tagable/workflows/latest/badge.svg" alt="latest stability"/>
+  </a>
+  <a href="https://greenkeeper.io/">
+    <img src="https://badges.greenkeeper.io/j-m/tagable.svg" alt="greenkeeper badge"/>
   </a>
 </p>
 
 ## About
-
-[![Greenkeeper badge](https://badges.greenkeeper.io/j-m/tagable.svg)](https://greenkeeper.io/)
 
 The idea is to provide a simple platform that can be used to tag abstracted resources.  
 
