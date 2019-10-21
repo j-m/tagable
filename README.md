@@ -11,6 +11,8 @@
 
 ## About
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/j-m/tagable.svg)](https://greenkeeper.io/)
+
 The idea is to provide a simple platform that can be used to tag abstracted resources.  
 
 ## Development
