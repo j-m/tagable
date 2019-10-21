@@ -39,6 +39,6 @@
     "typescript": "^3.5.3"
   },
   "dependencies": {
-    "oaty": "^0.3.0"
+    "oaty": "^0.4.0"
   }
 }
