@@ -1,15 +1,10 @@
 <p align="center">
   <img src="./img/logo.png" alt="tagable"/>
   <br/>
-  <a href="https://github.com/j-m/tagable/actions">
-    <img src="https://github.com/j-m/tagable/workflows/master/badge.svg" alt="master stability"/>
-  </a>
-  <a href="https://github.com/j-m/tagable/actions">
-    <img src="https://github.com/j-m/tagable/workflows/latest/badge.svg" alt="latest stability"/>
-  </a>
-  <a href="https://greenkeeper.io/">
-    <img src="https://badges.greenkeeper.io/j-m/tagable.svg" alt="greenkeeper badge"/>
-  </a>
+  <a href="https://github.com/j-m/tagable/actions"><img src="https://github.com/j-m/tagable/workflows/master/badge.svg" alt="master stability"/></a>
+  <a href="https://github.com/j-m/tagable/actions"><img src="https://github.com/j-m/tagable/workflows/latest/badge.svg" alt="latest stability"/></a>
+  <a href="https://greenkeeper.io/"><img src="https://badges.greenkeeper.io/j-m/tagable.svg" alt="greenkeeper badge"/></a>
+  <img src="https://badgen.net/runkit/count-i57yigrtdbjf" alt="hits"/>
 </p>
 
 ## About
